@@ -43,10 +43,10 @@ public:
 
 	// Obtiene el tamaño de la lista
 	int getSize();
-}
+};
 
 template <class T> Lista<T>::Lista() {
-	this->primero = null;
+	this->primero = NULL;
 	this->iterador = this->primero;
 	this->iteracion = 0;
 	this->size = 0;

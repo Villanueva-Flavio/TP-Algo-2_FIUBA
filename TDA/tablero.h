@@ -1,6 +1,6 @@
 #ifndef __TABLERO_H__
 #define __TABLERO_H__
-
+#include <string>
 #include "lista.h"
 #include "celula.h"
 
@@ -25,7 +25,7 @@ template <class T> class Tablero {
         // Obtiene el dato de la celda especificada
         getData(int n, int m, int l);
 
-}
+};
 
 template <class T> Tablero<T>::Tablero(int n, int m, int l){
 
@@ -55,7 +55,6 @@ template <class T> Tablero<T>::~Tablero(){
         this->filas->~Lista();
     }
 }
-
 template <class T> void Tablero<T>::setData(int n, int m, int l, T data){
     setCoordenada(n, m, l);
     this->filas->columnas->capas->celula->setData(data);
@@ -68,12 +67,12 @@ template <class T> T Tablero<T>::getData(int n, int m, int l){
 
 template <class T> void Tablero<T>::setCoordenada(int n, int m, int l){
     
-    sector = *this->filas;
-    sector->irANodo(n);
-    sector = *this->columnas;
-    sector->irANodo(m);
-    sector = *this->capas;
-    sector->irANodo(l);
+    Lista<T>* celda = *this->filas;
+    celda->irANodo(n);
+    celda = *this->columnas;
+    celda->irANodo(m);
+    celda = *this->capas;
+    celda->irANodo(l);
 
 }
 
