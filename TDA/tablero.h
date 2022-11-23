@@ -6,10 +6,11 @@
 
 template <class T> class Tablero {
     private:
-        Lista<T> filas;
-    
-        setCoordenada(int n, int m, int l);
-        irANodo(int x);
+        Lista<T>* filas;
+        Lista<T>* columnas;
+        Lista<T>* capas;   
+        Celula<T>* celula; 
+        void setCoordenada(int n, int m, int l);
         
     public:
 
@@ -20,18 +21,18 @@ template <class T> class Tablero {
         ~Tablero();
 
         // Recibe un dato y lo carga en la celda especificada
-        setData(int n, int m, int l, T data);
+        void setData(int n, int m, int l, T data);
 
         // Obtiene el dato de la celda especificada
-        getData(int n, int m, int l);
+        T getData(int n, int m, int l);
 
 };
 
 template <class T> Tablero<T>::Tablero(int n, int m, int l){
 
-    Lista<T> columnas = Lista<T>();
-    Lista<T> capas = Lista<T>();
-    Celula<T> celula = Celula<T>();
+    this->filas->add(this->columnas);
+    this->filas->columnas->add(this->capas);
+    this->filas->columnas->capas->add(this->celula);
 
     for(int i = 0; i < n; i++){
         this->filas.add(columnas);
@@ -74,16 +75,6 @@ template <class T> void Tablero<T>::setCoordenada(int n, int m, int l){
     celda = *this->capas;
     celda->irANodo(l);
 
-}
-
-template <class T> void Tablero<T>::irANodo(int x){
-    if(x > this->getIter()){
-        this->resetIter();
-    }
-
-    for(int i = this->getIter(); i <= x; i++){
-        this->iterar(NEXT);
-    }
 }
 
 #endif

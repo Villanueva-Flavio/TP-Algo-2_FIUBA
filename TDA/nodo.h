@@ -20,11 +20,11 @@ public:
     
     // Devuelve el nodo siguiente
     Nodo<T>* next();
-}
+};
 
 template <class T> Nodo<T>::Nodo(T data){
     this->data = data;
-    this->sig = null;
+    this->sig = NULL;
 }
 
 template <class T> T Nodo<T>::getData(){

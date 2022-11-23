@@ -2,49 +2,116 @@
 #define __CELULA_H__
 #include <string>
 #include "lista.h"
-template <class T> class Genes{
+
+using namespace std;
+
+template <class T> class Gen{
     private:
         string nombre;
         int carga;
     public:
-        Genes(string nombre, int carga);
+
+        // Constructor de Gen
+        Gen();
+
+        // Recibe el nombre y la carga de un gen, los carga en el objeto
+        void setData(string nombre, int carga);
+
+        // Obtiene el nombre del gen
         string getNombre();
+
+        // Obtiene la carga del gen
         int getCarga();
 };
 
 template <class T> class Celula {
     private:
-        string nombre;
         string estado;
-        Genes<T> genes[3];
+        string mutador;
+        Lista<T>* genes;
 
     public:
+
+        // Constructor de celula
         Celula();
+
+        // Recibe una celula y la carga en el objeto
         void setData(Celula<T> datos);
-        setNombre(string nombre);
-        setGenes(Genes<T> genes[3]);
-        setEstado(string estado);
-        string getNombre();
+
+        // Obtiene la lista de genes de la celula
+        Lista<T> getGenes();
+
+        // Recibe el id del gen, el nombre y su carga, y lo carga en el objeto
+        void setGen(int gen, string nombre, int carga);
+
+        // Recibe el estado de la celula y lo carga en el objeto
+        void setEstado(string estado);
+
+        // Obtiene el nombre del mutador de la celula
+        string getMutador();
+
+        // Obtiene el nombre del estado de la celula
         string getEstado();
-        getCelula();
 
 };
 
-template <class T> Celula<T>::Celula() {
-    this->nombre = NULL;
+template <class T> Celula<T>::Celula(){
+    Gen<T> gen = gen();
     this->estado = NULL;
-    this->genes[0] = Genes<T>(NULL, NULL);
-    this->genes[1] = Genes<T>(NULL, NULL);
-    this->genes[2] = Genes<T>(NULL, NULL);
+    this->mutador = NULL;
+    for(unsigned int i = 0; i < 3; i ++){this->genes->add(gen);}
 }
 
-template <class T> void Celula<T>::setData(Celula<T> datos) {
-    this->nombre = datos.nombre;
+template <class T> void Celula<T>::setData(Celula<T> datos){
     this->estado = datos.estado;
-    this->genes[0] = datos.genes[0];
-    this->genes[1] = datos.genes[1];
-    this->genes[2] = datos.genes[2];
+    this->mutador = datos.mutador;
+    for(unsigned int i = 0; i < 3; i ++){
+        this->genes->setData(datos->genes->getNombre(), datos->genes->getCarga());
+        this->genes->iterar(NEXT);
+        datos->genes->iterar(NEXT);
+    }
 }
 
+template <class T> Lista<T> Celula<T>::getGenes(){
+    return this->genes;
+}
+
+template <class T> void Celula<T>::setGen(int gen, string nombre, int carga){
+    this->genes->irANodo(gen);
+    this->genes->setData(nombre, carga);
+}
+
+template <class T> void Celula<T>::setEstado(string estado){
+    this->estado = estado;
+}
+
+template <class T> string Celula<T>::getMutador(){
+    return this->mutador;
+}
+
+template <class T> string Celula<T>::getEstado(){
+    return this->estado;
+}
+
+
+/////////////////////////////////////   GEN METHODS   ///////////////////////////////////////
+
+template <class T> Gen<T>::Gen(){
+    this->nombre = NULL;
+    this->carga = NULL;
+}
+
+template <class T> void Gen<T>::setData(string nombre, int carga){
+    this->nombre = nombre;
+    this->carga = carga;
+}
+
+template <class T> string Gen<T>::getNombre(){
+    return this->nombre;
+}
+
+template <class T> int Gen<T>::getCarga(){
+    return this->carga;
+}
 
 #endif

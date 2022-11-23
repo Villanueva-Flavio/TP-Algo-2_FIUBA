@@ -43,6 +43,8 @@ public:
 
 	// Obtiene el tamaño de la lista
 	int getSize();
+
+	void irANodo(int x);
 };
 
 template <class T> Lista<T>::Lista() {
@@ -94,6 +96,16 @@ template <class T> int Lista<T>::getIter() {
 
 template <class T> int Lista<T>::getSize() {
 	return this->size;
+}
+
+template <class T> void Lista<T>::irANodo(int x){
+    if(x > this->getIter()){
+        this->resetIter();
+    }
+
+    for(int i = this->getIter(); i <= x; i++){
+        this->iterar(NEXT);
+    }
 }
 
 #endif
