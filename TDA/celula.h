@@ -28,7 +28,7 @@ template <class T> class Celula {
     private:
         string estado;
         string mutador;
-        Lista<T> genes;
+        Gen genes[3];
 
     public:
 
@@ -37,9 +37,6 @@ template <class T> class Celula {
 
         // Recibe una celula y la carga en el objeto
         void setData(Celula<T> datos);
-
-        // Obtiene la lista de genes de la celula
-        Lista<T> getGenes();
 
         // Recibe el id del gen, el nombre y su carga, y lo carga en el objeto
         void setGen(int gen, string nombre, int carga);
@@ -70,10 +67,6 @@ template <class T> void Celula<T>::setData(Celula<T> datos){
         this->genes->iterar(NEXT);
         datos->genes->iterar(NEXT);
     }
-}
-
-template <class T> Lista<T> Celula<T>::getGenes(){
-    return this->genes;
 }
 
 template <class T> void Celula<T>::setGen(int gen, string nombre, int carga){

@@ -72,7 +72,7 @@ template <class T> void Lista<T>::iterar(bool loop){
 	do{
 		this->iterador = this->iterador->sig;
 		this->iteracion++;
-	} while (this->iteracion < this->size && loop);
+	} while (this->iteracion < this->getSize() && loop);
 }
 
 template <class T> void Lista<T>::resetIter() {
