@@ -33,7 +33,7 @@ public:
 	void resetIter();
 
 	// Obtiene el dato del nodo del iterador
-	T getData();
+	T getData(int x);
 
 	// Crea un nuevo nodo al final de la lista
 	void add(T data);
@@ -55,10 +55,13 @@ template <class T> Lista<T>::Lista() {
 }
 
 template <class T> Lista<T>::~Lista() {
-	iterar(LAST);
-	Nodo<T>* destructor = this->iterador;
-	iterar();
-	delete(destructor);
+	Nodo<T>* destructor = this->primero;
+	while(this->getSize()>0){
+		this->primero = this->primero->sig;
+		delete destructor;
+		destructor = this->primero;
+		this->size --;
+	}
 }
 
 template <class T> void Lista<T>::assign(T data){
@@ -77,13 +80,14 @@ template <class T> void Lista<T>::resetIter() {
 	this->iteracion = 0;
 }
 
-template <class T> T Lista<T>::getData() {
+template <class T> T Lista<T>::getData(int x) {
+	irANodo(x);
 	return this->iterador->data;
 }
 
 template <class T> void Lista<T>::add(T data) {
 	Nodo<T>* nuevo = new Nodo<T>(data);
-	nuevo->sig = this->primero;
+	nuevo->sig = NULL;
 	iterar(LAST);
 	this->iterador->sig = nuevo;
 	this->size++;

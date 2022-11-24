@@ -28,7 +28,7 @@ template <class T> class Celula {
     private:
         string estado;
         string mutador;
-        Lista<T>* genes;
+        Lista<T> genes;
 
     public:
 

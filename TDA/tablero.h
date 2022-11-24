@@ -6,10 +6,7 @@
 
 template <class T> class Tablero {
     private:
-        Lista<T>* filas;
-        Lista<T>* columnas;
-        Lista<T>* capas;   
-        Celula<T>* celula; 
+        Lista<Lista<Lista<Celula<T>*>*>*>* cubo;
         void setCoordenada(int n, int m, int l);
         
     public:
@@ -29,52 +26,48 @@ template <class T> class Tablero {
 };
 
 template <class T> Tablero<T>::Tablero(int n, int m, int l){
-
-    this->filas->add(this->columnas);
-    this->filas->columnas->add(this->capas);
-    this->filas->columnas->capas->add(this->celula);
-
+    this->cubo = new Lista<Lista<Lista<Celula<T>*>*>*>(n);
     for(int i = 0; i < n; i++){
-        this->filas.add(columnas);
+        Lista<Lista<Celula<T>*>*>* cuadrado = new Lista<Lista<Celula<T>*>*>(m);
+        this->cubo->add(cuadrado);
         for(int j = 0; j < m; j++){
-            this->filas->columnas->add(capas);
+            Lista<Celula<T>*>* linea = new Lista<Celula<T>*>(l);
+            cuadrado->add(linea);
             for(int k = 0; k < l; k++){
-                this->filas->columnas->capas->add(celula);
+                Celula<T>* celula = new Celula<T>();
+                linea->add(celula);
             }
         }
     }
 }
 
 template <class T> Tablero<T>::~Tablero(){
-    for(unsigned int n = 0; n < this->filas->getSize(); n++){
-        for(unsigned int m = 0; m < this->filas->columnas->getSize(); m++){
-            for(unsigned int l = 0; l < this->filas->columnas->capas->getSize(); l++){
-                this->filas->columnas->capas->~Celula();
+    for(unsigned int n = 0; n < ; n++){
+        for(unsigned int m = 0; m < ; m++){
+            for(unsigned int l = 0; l < ; l++){
+                delete this->cubo->getData(n)->getData(m)->getData(l);
             }
-            this->filas->columnas->~Lista();
+            delete this->cubo->getData(n)->getData(m);
         }
-        this->filas->~Lista();
+        delete this->cubo->getData(n);
     }
+    delete this->cubo;
 }
+
 template <class T> void Tablero<T>::setData(int n, int m, int l, T data){
     setCoordenada(n, m, l);
-    this->filas->columnas->capas->celula->setData(data);
+    this->cubo->getData(n)->getData(m)->getData(l)->setData(data);
 }
 
 template <class T> T Tablero<T>::getData(int n, int m, int l){
     setCoordenada(n, m, l);
-    return this->filas->columnas->capas->celula->getData();
+    return this->cubo->getData(n)->getData(m)->getData(l);
 }
 
 template <class T> void Tablero<T>::setCoordenada(int n, int m, int l){
-    
-    Lista<T>* celda = *this->filas;
-    celda->irANodo(n);
-    celda = *this->columnas;
-    celda->irANodo(m);
-    celda = *this->capas;
-    celda->irANodo(l);
-
+    this->cubo->irANodo(n);
+    this->cubo->Lista<T>::getData(m)->irANodo(m);
+    this->cubo->Lista<T>::getData(m)->Lista<T>::getData(m)->irANodo(l);
 }
 
 #endif

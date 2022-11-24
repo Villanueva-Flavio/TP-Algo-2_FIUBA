@@ -1,4 +1,5 @@
 #include "./TDA/tablero.h"
+#include "./TDA/celula.h"
 
 // TDA Nodo ✓
 // TDA Lista ✓
@@ -10,6 +11,7 @@
 // Opcionales (Archivos)
 
 int main(){
-    
+    //crear tablero 10x10x10
+    Tablero<Celula>* tablero = new Tablero(10, 10, 10);
     return 0;
 }
