@@ -29,7 +29,7 @@ template <class T> class Celula {
         string estado;
         string mutador;
         Lista<T> genes;
-a
+
     public:
 
         // Constructor de celula
