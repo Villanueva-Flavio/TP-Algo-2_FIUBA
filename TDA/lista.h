@@ -57,7 +57,7 @@ template <class T> Lista<T>::Lista() {
 template <class T> Lista<T>::~Lista() {
 	Nodo<T>* destructor = this->primero;
 	while(this->getSize()>0){
-		this->primero = this->primero->sig;
+		this->primero = this->primero->next();
 		delete destructor;
 		destructor = this->primero;
 		this->size --;
@@ -70,7 +70,7 @@ template <class T> void Lista<T>::assign(T data){
 
 template <class T> void Lista<T>::iterar(bool loop){
 	do{
-		this->iterador = this->iterador->sig;
+		this->iterador = this->iterador->next();
 		this->iteracion++;
 	} while (this->iteracion < this->getSize() && loop);
 }
@@ -82,14 +82,14 @@ template <class T> void Lista<T>::resetIter() {
 
 template <class T> T Lista<T>::getData(int x) {
 	irANodo(x);
-	return this->iterador->data;
+	return this->iterador->getData();
 }
 
 template <class T> void Lista<T>::add(T data) {
 	Nodo<T>* nuevo = new Nodo<T>(data);
-	nuevo->sig = NULL;
+	nuevo->next() = NULL;
 	iterar(LAST);
-	this->iterador->sig = nuevo;
+	this->iterador->next() = nuevo;
 	this->size++;
 	iterar(NEXT);
 }

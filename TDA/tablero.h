@@ -43,8 +43,8 @@ template <class T> Tablero<T>::Tablero(int n, int m, int l){
 
 template <class T> Tablero<T>::~Tablero(){
     for(unsigned int n = 0; n < this->cubo->getSize(); n++){
-        for(unsigned int m = 0; m < this->cubo->getData(m)->getSize ; m++){
-            for(unsigned int l = 0; l < this->cubo->getData(m)->getData(l)->getSize; l++){
+        for(unsigned int m = 0; m < this->cubo->getData(m)->getSize(); m++){
+            for(unsigned int l = 0; l < this->cubo->getData(m)->getData(l)->getSize(); l++){
                 delete this->cubo->getData(n)->getData(m)->getData(l);
             }
             delete this->cubo->getData(n)->getData(m);
