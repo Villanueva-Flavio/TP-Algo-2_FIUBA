@@ -56,22 +56,21 @@ template <class T> Celula<T>::Celula(){
     Gen<T> gen = gen();
     this->estado = NULL;
     this->mutador = NULL;
-    for(unsigned int i = 0; i < 3; i ++){this->genes->add(gen);}
+    for(unsigned int i = 0; i < 3; i ++){
+        this->genes[i] = gen;
+    }
 }
 
 template <class T> void Celula<T>::setData(Celula<T> datos){
     this->estado = datos.estado;
     this->mutador = datos.mutador;
     for(unsigned int i = 0; i < 3; i ++){
-        this->genes->setData(datos->genes->getNombre(), datos->genes->getCarga());
-        this->genes->iterar(NEXT);
-        datos->genes->iterar(NEXT);
+        this->genes[i] = datos.genes[i];
     }
 }
 
 template <class T> void Celula<T>::setGen(int gen, string nombre, int carga){
-    this->genes->irANodo(gen);
-    this->genes->setData(nombre, carga);
+    this->genes[gen].setData(nombre, carga);
 }
 
 template <class T> void Celula<T>::setEstado(string estado){
