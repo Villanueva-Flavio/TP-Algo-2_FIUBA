@@ -12,6 +12,6 @@
 
 int main(){
     //crear tablero 10x10x10
-    Tablero<Celula>* tablero = new Tablero(10, 10, 10);
+    //Tablero<int>* tablero = new Tablero(10, 10, 10);
     return 0;
 }
