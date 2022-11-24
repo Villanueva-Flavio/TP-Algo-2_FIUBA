@@ -5,7 +5,7 @@
 
 using namespace std;
 
-template <class T> class Gen{
+class Gen{
     private:
         string nombre;
         int carga;
@@ -53,7 +53,7 @@ template <class T> class Celula {
 };
 
 template <class T> Celula<T>::Celula(){
-    Gen<T> gen = gen();
+    Gen gen = Gen();
     this->estado = NULL;
     this->mutador = NULL;
     for(unsigned int i = 0; i < 3; i ++){
@@ -88,21 +88,21 @@ template <class T> string Celula<T>::getEstado(){
 
 /////////////////////////////////////   GEN METHODS   ///////////////////////////////////////
 
-template <class T> Gen<T>::Gen(){
-    this->nombre = NULL;
-    this->carga = NULL;
+Gen::Gen(){
+    this->nombre = "";
+    this->carga = 0;
 }
 
-template <class T> void Gen<T>::setData(string nombre, int carga){
+void Gen::setData(string nombre, int carga){
     this->nombre = nombre;
     this->carga = carga;
 }
 
-template <class T> string Gen<T>::getNombre(){
+string Gen::getNombre(){
     return this->nombre;
 }
 
-template <class T> int Gen<T>::getCarga(){
+int Gen::getCarga(){
     return this->carga;
 }
 
