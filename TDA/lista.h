@@ -8,7 +8,7 @@
 
 template <class T> class Lista {
 private:
-	Nodo<T>* primer;
+	Nodo<T>* primero;
 	Nodo<T>* iterador;
 	unsigned int size;
 	unsigned int iteracion;
