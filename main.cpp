@@ -1,21 +1,16 @@
 #include "./TDA/tablero.h"
 #include "./TDA/celula.h"
 #include <iostream>
-// TDA Nodo ✓
-// TDA Lista ✓
-// TDA Tablero ✓
-// TDA Celula ✓
-// Carga del juego
+// TDA Nodo ✓ . Flavio
+// TDA Lista ✓ - Flavio
+// TDA Tablero ✓ - Flavio
+// TDA Celula ✓ - Flavio
+// Carga del juego - Feli
 // Procesamiento del juego
-// Bitmaps
+// Bitmaps - Sote
 // Opcionales (Archivos)
 
 int main(){
-    
-    Tablero<Celula>* tablero = new Tablero<Celula>(10, 10, 10);
-    cout << "CREADO" << endl;
-    delete tablero;
-    cout << "ELIMINADO" << endl;
 
     return 0;
 }
