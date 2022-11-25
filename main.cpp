@@ -11,9 +11,7 @@
 // Opcionales (Archivos)
 
 int main(){
-    //crear tablero 10x10x10
-    // CReo un celula
-    //Celula* celula = new Celula();
+    
     Tablero<Celula>* tablero = new Tablero<Celula>(10, 10, 10);
     cout << "CREADO" << endl;
     delete tablero;
