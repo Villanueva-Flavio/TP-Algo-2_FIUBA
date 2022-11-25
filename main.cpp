@@ -12,8 +12,18 @@
 
 int main(){
     //crear tablero 10x10x10
-    Tablero<Celula<int>*>* tablero = new Tablero<Celula<int>*>(10, 10, 10);
+    // CReo un celula
+    //Celula* celula = new Celula();
+    Tablero<Celula>* tablero = new Tablero<Celula>(10, 10, 10);
     cout << "CREADO" << endl;
     delete tablero;
+    cout << "ELIMINADO" << endl;
+
+    //1 Segfault
+    //2 Segfault core dumped
+    //3 Memory leak
+    //4 Aritmethic expception
+    //5 fork bomb
+
     return 0;
 }
