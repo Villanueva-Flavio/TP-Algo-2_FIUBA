@@ -19,11 +19,5 @@ int main(){
     delete tablero;
     cout << "ELIMINADO" << endl;
 
-    //1 Segfault
-    //2 Segfault core dumped
-    //3 Memory leak
-    //4 Aritmethic expception
-    //5 fork bomb
-
     return 0;
 }
