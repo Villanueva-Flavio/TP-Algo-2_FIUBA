@@ -54,8 +54,8 @@ class Celula {
 
 Celula::Celula(){
     Gen gen = Gen();
-    this->estado = "";
-    this->mutador = "";
+    this->estado = "MUERTA";
+    this->mutador = "NINGUNA";
     for(unsigned int i = 0; i < 3; i ++){
         this->genes[i] = gen;
     }
