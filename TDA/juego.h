@@ -1,6 +1,6 @@
 #ifndef __JUEGO_H__
 #define __JUEGO_H__
-
+#include "tablero.h"
 class JuegoDeLaVida{
     private:
     // Los parametros para las reglas
