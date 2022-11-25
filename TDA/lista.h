@@ -2,12 +2,9 @@
 #define __LISTA_H__
 #include <iostream>
 #include "nodo.h"
-#include <stdlib.h>
-#include <unistd.h>
 
 #define LAST true
 #define NEXT false
-using namespace std;
 
 template <class T> class Lista {
 private:
