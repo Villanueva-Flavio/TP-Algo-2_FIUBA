@@ -24,7 +24,7 @@ class Gen{
         int getCarga();
 };
 
-template <class T> class Celula {
+class Celula {
     private:
         string estado;
         string mutador;
@@ -36,7 +36,7 @@ template <class T> class Celula {
         Celula();
 
         // Recibe una celula y la carga en el objeto
-        void setData(Celula<T> datos);
+        void setData(Celula datos);
 
         // Recibe el id del gen, el nombre y su carga, y lo carga en el objeto
         void setGen(int gen, string nombre, int carga);
@@ -52,16 +52,16 @@ template <class T> class Celula {
 
 };
 
-template <class T> Celula<T>::Celula(){
+Celula::Celula(){
     Gen gen = Gen();
-    this->estado = NULL;
-    this->mutador = NULL;
+    this->estado = "";
+    this->mutador = "";
     for(unsigned int i = 0; i < 3; i ++){
         this->genes[i] = gen;
     }
 }
 
-template <class T> void Celula<T>::setData(Celula<T> datos){
+void Celula::setData(Celula datos){
     this->estado = datos.estado;
     this->mutador = datos.mutador;
     for(unsigned int i = 0; i < 3; i ++){
@@ -69,19 +69,19 @@ template <class T> void Celula<T>::setData(Celula<T> datos){
     }
 }
 
-template <class T> void Celula<T>::setGen(int gen, string nombre, int carga){
+void Celula::setGen(int gen, string nombre, int carga){
     this->genes[gen].setData(nombre, carga);
 }
 
-template <class T> void Celula<T>::setEstado(string estado){
+void Celula::setEstado(string estado){
     this->estado = estado;
 }
 
-template <class T> string Celula<T>::getMutador(){
+string Celula::getMutador(){
     return this->mutador;
 }
 
-template <class T> string Celula<T>::getEstado(){
+string Celula::getEstado(){
     return this->estado;
 }
 

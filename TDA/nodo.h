@@ -13,13 +13,15 @@ public:
     Nodo(T data);
     
     // Devuelve el dato guardado en el nodo
-    T getData();
+    T getNData();
     
     // Cambia el dato guardado en el nodo por el del parametro
-    void setData(T data);
+    void setNData(T data);
     
     // Devuelve el nodo siguiente
     Nodo<T>* next();
+
+    void setSig(Nodo<T>* sig);
 };
 
 template <class T> Nodo<T>::Nodo(T data){
@@ -27,16 +29,20 @@ template <class T> Nodo<T>::Nodo(T data){
     this->sig = NULL;
 }
 
-template <class T> T Nodo<T>::getData(){
+template <class T> T Nodo<T>::getNData(){
     return this->data;
 }
 
-template <class T> void Nodo<T>::setData(T data){
+template <class T> void Nodo<T>::setNData(T data){
     this->data = data;
 }
 
 template <class T> Nodo<T>* Nodo<T>::next(){
     return this->sig;
+}
+
+template <class T> void Nodo<T>::setSig(Nodo<T>* sig) {
+    this->sig = sig;
 }
 
 #endif

@@ -6,7 +6,7 @@
 
 template <class T> class Tablero {
     private:
-        Lista<Lista<Lista<Celula<T>*>*>*>* cubo;
+        Lista<Lista<Lista<T>*>*>* cubo;
         void setCoordenada(int n, int m, int l);
         
     public:
@@ -18,56 +18,58 @@ template <class T> class Tablero {
         ~Tablero();
 
         // Recibe un dato y lo carga en la celda especificada
-        void setData(int n, int m, int l, T data);
+        void setTData(int n, int m, int l, T data);
 
         // Obtiene el dato de la celda especificada
-        T getData(int n, int m, int l);
+        T getTData(int n, int m, int l);
 
 };
 
-template <class T> Tablero<T>::Tablero(int n, int m, int l){
-    this->cubo = new Lista<Lista<Lista<Celula<T>*>*>*>(n);
-    for(int i = 0; i < n; i++){
-        Lista<Lista<Celula<T>*>*>* cuadrado = new Lista<Lista<Celula<T>*>*>(m);
-        this->cubo->add(cuadrado);
-        for(int j = 0; j < m; j++){
-            Lista<Celula<T>*>* linea = new Lista<Celula<T>*>(l);
-            cuadrado->add(linea);
-            for(int k = 0; k < l; k++){
-                Celula<T>* celula = new Celula<T>();
-                linea->add(celula);
+
+
+template <class T> Tablero<T>::Tablero(int n, int m, int l) {
+    cubo = new Lista<Lista<Lista<T>*>*>();
+    for (int i = 0; i < n; i++) {
+        Lista<Lista<T>*>* plano = new Lista<Lista<T>*>();
+        for (int j = 0; j < m; j++) {
+            Lista<T>* fila = new Lista<T>();
+            for (int k = 0; k < l; k++) {
+                fila->add(T());
             }
+            plano->add(fila);
         }
+        cubo->add(plano);
     }
 }
 
-template <class T> Tablero<T>::~Tablero(){
-    for(unsigned int n = 0; n < this->cubo->getSize(); n++){
-        for(unsigned int m = 0; m < this->cubo->getData(m)->getSize(); m++){
-            for(unsigned int l = 0; l < this->cubo->getData(m)->getData(l)->getSize(); l++){
-                delete this->cubo->getData(n)->getData(m)->getData(l);
-            }
-            delete this->cubo->getData(n)->getData(m);
+//DESTRUCTOR DE TABLERO
+
+template <class T> Tablero<T>::~Tablero() {
+    for (int i = 0; i < cubo->getSize(); i++) {
+        Lista<Lista<T>*>* plano = cubo->getLData(i);
+        for (int j = 0; j < plano->getSize(); j++) {
+            Lista<T>* fila = plano->getLData(j);
+            //delete fila;
         }
-        delete this->cubo->getData(n);
+        //delete plano;
     }
-    delete this->cubo;
+    delete cubo;
 }
 
-template <class T> void Tablero<T>::setData(int n, int m, int l, T data){
+template <class T> void Tablero<T>::setTData(int n, int m, int l, T data){
     setCoordenada(n, m, l);
-    this->cubo->getData(n)->getData(m)->getData(l)->setData(data);
+    this->cubo->getLData(n)->getLData(m)->getLData(l)->setNData(data);
 }
 
-template <class T> T Tablero<T>::getData(int n, int m, int l){
+template <class T> T Tablero<T>::getTData(int n, int m, int l){
     setCoordenada(n, m, l);
-    return this->cubo->getData(n)->getData(m)->getData(l);
+    return this->cubo->getLData(n)->getLData(m)->getLData(l);
 }
 
 template <class T> void Tablero<T>::setCoordenada(int n, int m, int l){
     this->cubo->irANodo(n);
-    this->cubo->Lista<T>::getData(m)->irANodo(m);
-    this->cubo->Lista<T>::getData(m)->Lista<T>::getData(m)->irANodo(l);
+    this->cubo->Lista<T>::getLData(m)->irANodo(m);
+    this->cubo->Lista<T>::getLData(m)->Lista<T>::getLData(m)->irANodo(l);
 }
 
 #endif
