@@ -11,6 +11,8 @@
 // Opcionales (Archivos)
 
 int main(){
-
+    //crear tablero de celula con new
+    Tablero<Celula>* tablero = new Tablero<Celula>(200,200,200);
+    delete tablero;
     return 0;
 }
