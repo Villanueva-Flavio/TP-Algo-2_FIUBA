@@ -54,18 +54,18 @@ template <class T> Tablero<T>::Tablero(int n, int m, int l) {
 //DESTRUCTOR DE TABLERO
 
 template <class T> Tablero<T>::~Tablero() {
-    for (int i = 0; i < cubo->getSize(); i++) {
-        Lista<Lista<T>*>* plano = cubo->getLData(i);
-        for (int j = 0; j < plano->getSize(); j++) {
-            Lista<T>* fila = plano->getLData(j);
-            //delete fila;
-            this->z --;
+    cubo->resetIter();
+    int a = this->y, b = this->z;
+    for (int i = 0; i < a; i++) {
+        cubo->getLData(i)->resetIter();
+        for (int j = 0; j < b; j++) {
+            cubo->getLData(i)->getLData(j)->resetIter();
+            delete cubo->getLData(i)->getLData(j);
         }
-        //delete plano;
-        this->y --;
+        delete cubo->getLData(i);
     }
+    this->x = 0, this->y = 0, this->z = 0;
     delete cubo;
-    this->x --;
 }
 
 template <class T> unsigned int Tablero<T>::getTamanioX() {
