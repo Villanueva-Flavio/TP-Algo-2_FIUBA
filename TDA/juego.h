@@ -61,16 +61,16 @@ class Juego{
         Stats stats;
 
     public:
-        Juego(int n, int m, int l, Opciones aux); // arreglar esto con pedir la data y generar el tablero
+        Juego(int size[3], Opciones *aux);
         ~Juego();
-        void jugar();
+        void llenarJuego(Opciones* aux);
         Stats getStats();
         Opciones getOpciones();
         void setStats(Stats aux);
         void addTurno();
         int getTurno();
         void solicitarMetaData(Opciones* aux);
-        void cargarTablero();
+        void cargarTablero(Opciones opciones);
         void setOpciones(Opciones aux);
 
 };
@@ -211,9 +211,10 @@ int Stats::getMuertasGenerales(){
     return this->muertasGenerales;
 }
 
-Juego::Juego(int n, int m, int l){
-    this->tablero = new Tablero<Celula*>(n, m, l);
+Juego::Juego(int size[3], Opciones *aux){
+    this->tablero = new Tablero<Celula*>(size[0], size[1], size[2]);
     this->turno = 0;
+    this->opciones = *aux;
 }
 
 Juego::~Juego(){
@@ -251,16 +252,18 @@ void Juego::solicitarMetaData(Opciones* aux){
     aux->setAutomatico();
 }
 
-void Juego::cargarTablero(){
-
+void Juego::cargarTablero(Opciones opciones){
+    if (opciones.getAutomatico()){
+        this->tablero->cargarTableroAutomatico(opciones);
+    } else {
+        this->tablero->cargarTableroManual(opciones);
+    }
 }
 
-void Juego::jugar(){
-    Opciones* aux = new Opciones();
+void Juego::llenarJuego(Opciones* aux){
     solicitarMetaData(aux);
     setOpciones(*aux);
-    delete aux;
-    cargarTablero();
+    cargarTablero(*aux);
     
 }
 

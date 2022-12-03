@@ -3,6 +3,7 @@
 #include <string>
 #include "lista.h"
 #include "celula.h"
+#include "juego.h"
 
 template <class T> class Tablero {
     private:
@@ -24,13 +25,17 @@ template <class T> class Tablero {
         // Obtiene el dato de la celda especificada
         T getTData(int n, int m, int l);
 
-        unsigned int getTamanioX();
+        int getTamanioX();
 
-        unsigned int getTamanioY();
+        int getTamanioY();
 
-        unsigned int getTamanioZ();
+        int getTamanioZ();
         
         bool inRange(int n, int m, int l);
+
+        void cargarTableroAutomatico(Opciones opciones);
+
+        void cargarTableroManual(Opciones opciones);
 };
 
 
@@ -68,15 +73,15 @@ template <class T> Tablero<T>::~Tablero() {
     delete cubo;
 }
 
-template <class T> unsigned int Tablero<T>::getTamanioX() {
+template <class T> int Tablero<T>::getTamanioX() {
     return this->x;
 }
 
-template <class T> unsigned int Tablero<T>::getTamanioY() {
+template <class T> int Tablero<T>::getTamanioY() {
     return this->y;
 }
 
-template <class T> unsigned int Tablero<T>::getTamanioZ() {
+template <class T> int Tablero<T>::getTamanioZ() {
     return this->z;
 }
 
@@ -98,6 +103,26 @@ template <class T> void Tablero<T>::setCoordenada(int n, int m, int l){
 
 template <class T> bool Tablero<T>::inRange(int n, int m, int l) {
     return (n >= 0 && n < this->x && m >= 0 && m < this->y && l >= 0 && l < this->z);
+}
+
+template <class T> void Tablero<T>::cargarTableroAutomatico(Opciones opciones) {
+    int size[3];
+    int cantidad = opciones->getCantidadCelulas();
+    
+    for(int i = 0; i < 3; i ++){
+        size[i] = opciones->getDimension(i);
+    }
+    for(int i = 0; i < opciones->getCantidadCelulas(); i++){
+        do{
+            int x = rand() % size[0];
+            int y = rand() % size[1];
+            int z = rand() % size[2];
+            if(this->getTData(x, y, z)->getEstado() != "VIVA"){
+                this->setTData(x, y, z, aux);
+            }
+            
+        }
+    }
 }
 
 #endif

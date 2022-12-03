@@ -56,7 +56,7 @@ Celula::Celula(){
     Gen gen = Gen();
     this->estado = "MUERTA";
     this->mutador = "NINGUNA";
-    for(unsigned int i = 0; i < 3; i ++){
+    for(int i = 0; i < 3; i ++){
         this->genes[i] = gen;
     }
 }
@@ -64,7 +64,7 @@ Celula::Celula(){
 void Celula::setData(Celula datos){
     this->estado = datos.estado;
     this->mutador = datos.mutador;
-    for(unsigned int i = 0; i < 3; i ++){
+    for(int i = 0; i < 3; i ++){
         this->genes[i] = datos.genes[i];
     }
 }
@@ -102,7 +102,7 @@ string Gen::getNombre(){
     return this->nombre;
 }
 
-int Gen::getCarga(){
+int Gen::getCarga(){z
     return this->carga;
 }
 
