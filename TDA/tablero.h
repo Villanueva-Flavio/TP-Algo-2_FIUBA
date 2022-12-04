@@ -38,6 +38,12 @@ template <class T> class Tablero {
         void cargarTableroManual(Opciones opciones);
 
         void actualizarTablero();
+
+        int obtenerVecinas(int x, int y, int z);
+
+        Celula nuevoEstadoCelula(int i, int j, int k, int vecinas);
+
+        void avanzarTurno();
 };
 
 template <class T> Tablero<T>::cargarTableroAutomatico(Opciones opciones){
