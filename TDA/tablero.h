@@ -163,7 +163,7 @@ template <class T> void Tablero<T>::cargarTableroAutomatico(Opciones opciones) {
     }
 }
 
-template <class T> void Tablero<T>::actualizarTablero(){
+template <class T> void Tablero<T>::actualizarTablero(int parametros[3]){
     
 }
 
