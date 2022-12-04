@@ -5,8 +5,8 @@ int obtenerVecinas(Tablero<Celula> tablero, int x, int y, int z) {
     for(int i = x-1; i <= x+1; i++) {
         for(int j = y-1; j <= y+1; j++) {
             for(int k = z-1; k <= z+1; k++) {
-                if(tablero.inRange(i, j, k)){
-                    vecinas = (tablero.getTData(i, j, k).getEstado() == "VIVA")? vecinas + 1 : vecinas;
+                if(tablero->inRange(i, j, k)){
+                    vecinas = (tablero->getTData(i, j, k)->getEstado() == "VIVA")? vecinas + 1 : vecinas;
                 }
             }
         }
@@ -15,14 +15,14 @@ int obtenerVecinas(Tablero<Celula> tablero, int x, int y, int z) {
 }
 
 Celula nuevoEstadoCelula(Tablero<Celula> aux, int i, int j, int k, int vecinas){
-    Celula celula = aux.getTData(i, j, k);
-    if(celula.getEstado() == "VIVA"){
+    Celula celula = aux->getTData(i, j, k);
+    if(celula->getEstado() == "VIVA"){
         if(vecinas < 2 || vecinas > 3){
-            celula.setEstado("MUERTA");
+            celula->setEstado("MUERTA");
         }
     } else {
         if(vecinas == 3){
-            celula.setEstado("VIVA");
+            celula->setEstado("VIVA");
         }
     }
     return celula;
