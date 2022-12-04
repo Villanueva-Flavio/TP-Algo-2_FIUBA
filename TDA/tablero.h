@@ -190,18 +190,19 @@ template <class T> Celula Tablero<T>::nuevoEstadoCelula(int i, int j, int k, int
     return celula;
 }
 
-template <class T> void Tablero<T>::avanzarTurno(Tablero<Celula>* tablero){
+template <class T> void Tablero<T>::avanzarTurno(){
     int vecinas;
-    Celula aux;
-    for(int i = 0; i < tablero->getTamanioX(); i++){
-        for(int j = 0; j < tablero->getTamanioY(); j++){
-            for(int k = 0; k < tablero->getTamanioZ(); k++){
-                vecinas = obtenerVecinas(*tablero, i, j, k);
-                aux = nuevoEstadoCelula(*tablero, i, j, k, vecinas);
-                tablero->setTData(i, j, k, aux);
+    Celula aux = new Celula();
+    for(int i = 0; i < this->getTamanioX(); i++){
+        for(int j = 0; j < this->getTamanioY(); j++){
+            for(int k = 0; k < this->getTamanioZ(); k++){
+                vecinas = obtenerVecinas(i, j, k);
+                aux = nuevoEstadoCelula(i, j, k, vecinas);
+                this->setTData(i, j, k, aux);
             }
         }
     }
+    delete aux;
 }
 
 #endif
