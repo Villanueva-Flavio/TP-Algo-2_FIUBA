@@ -149,25 +149,6 @@ template <class T> bool Tablero<T>::inRange(int n, int m, int l) {
     return (n >= 0 && n < this->x && m >= 0 && m < this->y && l >= 0 && l < this->z);
 }
 
-template <class T> void Tablero<T>::cargarTableroAutomatico(Opciones opciones) {
-    int size[3];
-    int cantidad = opciones->getCantidadCelulas();
-    
-    for(int i = 0; i < 3; i ++){
-        size[i] = opciones->getDimension(i);
-    }
-    for(int i = 0; i < opciones->getCantidadCelulas(); i++){
-        do{
-            int x = rand() % size[0];
-            int y = rand() % size[1];
-            int z = rand() % size[2];
-            if(this->getTData(x, y, z)->getEstado() != "VIVA"){
-                this->setTData(x, y, z, aux);
-            }
-        }
-    }
-}
-
 template <class T> int Tablero<T>::obtenerVecinas(int x, int y, int z) {
     int vecinas = 0;
     for(int i = x-1; i <= x+1; i++) {

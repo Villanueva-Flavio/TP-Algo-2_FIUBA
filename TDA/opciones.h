@@ -47,7 +47,7 @@ void Opciones::setCelulasIniciales(){
     int max = this->dimension[0] * this->dimension[1] * this->dimension[2];
     cout << "Ingrese la cantidad de celulas iniciales" << endl;
     cin >> this->celulasIniciales;
-    while (this->celulasIniciales < 0 || this->celulasIniciales > max){
+    while (this->celulasIniciales < 1 || this->celulasIniciales > max){
         cout << "Por favor ingrese una cantidad valida" << endl;
         cin >> this->celulasIniciales;
     }
@@ -59,7 +59,7 @@ void Opciones::setDimension(bool limited){
     cout << "Ingrese la dimension del tablero que desea hasta 100 por dimension" << endl;
     for(int i = 0; i < 3; i++){
         cin >> respuesta;
-        while(respuesta < 0 || respuesta > max){
+        while(respuesta < 1 || respuesta > max){
             cout << "Por favor ingrese una dimension valida" << endl;
             cin >> respuesta;
         }

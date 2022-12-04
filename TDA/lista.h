@@ -113,7 +113,7 @@ template <class T> int Lista<T>::getSize() {
 	return this->size;
 }
 
-template <class T> void Lista<T>::irANodo(int x){
+template <class T> void Lista<T>::irANodo(int x+1){ // SE PUEDE COMO EN SCANF?
     if(x > this->getIter()){
         this->resetIter();
     }
