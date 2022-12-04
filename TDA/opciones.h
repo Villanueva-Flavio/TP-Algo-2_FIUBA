@@ -96,7 +96,7 @@ bool Opciones::getAutomatico(){
     return this->automatico;
 }
 
-void Opciones::solicitarMetaData(string param){
+void Opciones::solicitarMetadata(string param){
     bool limited = (param == "nolimit")? false : true;
     this->setDimension(limited);
     this->setParameters();
