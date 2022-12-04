@@ -30,6 +30,7 @@ class Juego{
         void setOpciones(Opciones aux);
         void llenarJuego();
         void jugar();
+        Tablero<Celula*>* getTablero();
 };
 
 Juego::Juego(int size[3], Opciones aux){
@@ -63,28 +64,39 @@ Opciones Juego::getOpciones(){
     return this->opciones;
 }
 
-void Juego::setOpciones(Opciones aux){
-    this->opciones = aux;
+Tablero<Celula*>* Juego::getTablero(){
+    return this->tablero;
 }
 
-void Juego::cargarTablero(Opciones opciones){
-    if (opciones.getAutomatico()){
-        this->tablero->cargarTableroAutomatico(opciones);
+void Juego::cargarTablero(){
+    if (this->getOpciones()->getAutomatico()){
+        this->->cargarTableroAutomatico(opciones);
     } else {
-        this->tablero->cargarTableroManual(opciones);
+        this->getTablero()->cargarTableroManual(opciones);
     }
 }
 
-void Juego::llenarJuego(){
-    Opciones* aux = new Opciones();
-    aux->solicitarMetaData();
-    this->setOpciones(*aux);
-    this->cargarTablero(*aux);
-    delete aux;
+void Juego::checkCongelado(string* opcion){
+    if(!this->congelado){
+        cout << "El juego se congeló, desea reiniciar? (Reiniciar / Salir)" << endl;
+    }
+    solicitarDecision(opcion);
 }
 
-void Juego::iniciarJuego(){
-    this->llenarJuego();
+void Juego::checkReiniciar(string opcion){
+    if(opcion == "Reiniciar" || opcion == "R" || opcion == "r" || opcion = "reiniciar"){
+        this->llenarJuego();
+        this->jugar();
+    }
+}
+
+void Juego::checkSalir(string opcion){
+    if(opcion == "Salir" || opcion == "S" || opcion == "s" || opcion = "salir"){
+        system("clear");
+        cout << "Se cerró el juego en el turno " << this->getTurno() << endl;
+        cout << "Gracias por jugar!" << endl;
+        cout << "        github.com/Villanueva-Flavio" << endl;    
+    }
 }
 
 void Juego::jugar(){
@@ -95,21 +107,10 @@ void Juego::jugar(){
         this->stats->actualizarStats(this->tablero, this->getTurno);
         this->stats->imprimirStats(this->getTurno);
         this->congelado = this->stats->estaCongelado();
-        if(!this->congelado){
-            cout << "El juego se congeló, desea reiniciar? (Reiniciar / Salir)" << endl;
-        }
-        solicitarDecision(&opcion);
+        checkCongelado(&opcion);
     }
-    if(opcion == "Reiniciar" || opcion == "R" || opcion == "r" || opcion = "reiniciar"){
-        this->llenarJuego();
-        this->jugar();
-    } else if(opcion == "Salir" || opcion == "S" || opcion == "s" || opcion = "salir"){
-        system("clear");
-        cout << "Se cerró el juego en el turno " << this->getTurno() << endl;
-        cout << "Gracias por jugar!" << endl;
-        cout << "        github.com/Villanueva-Flavio" << endl;    
-
-    }
+    checkReiniciar(opcion);
+    checkSalir(opcion);
 }
 
 #endif

@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     opciones->solicitarMetadata(param);
     Juego* juego = new Juego(*opciones);
     delete opciones;
-    juego->iniciarJuego();
+    juego->cargarTablero();
     juego->jugar();
     delete juego;
     return 0;
