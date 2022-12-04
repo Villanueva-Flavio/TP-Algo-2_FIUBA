@@ -5,9 +5,25 @@
 
 using namespace std;
 
+//ENUM MUTADORES
+enum Mutageno{
+    NINGUNA,
+    PORTAL,
+    RADIOACTIVA,
+    ENVENENADA,
+    PROCREADORA,
+    CONTAMINADA
+};
+
+enum Estado{
+    VIVA,
+    MUERTA,
+    NACIDA,
+};
+
 class Gen{
     private:
-        string nombre;
+        Estado nombre;
         int carga;
     public:
 
@@ -18,16 +34,18 @@ class Gen{
         void setData(string nombre, int carga);
 
         // Obtiene el nombre del gen
-        string getNombre();
+        Estado getNombre();
 
         // Obtiene la carga del gen
         int getCarga();
+
+        void setMutadorRandom();
 };
 
 class Celula {
     private:
         string estado;
-        string mutador;
+        Mutageno mutador;
         Gen genes[3];
 
     public:
@@ -42,20 +60,20 @@ class Celula {
         void setGen(int gen, string nombre, int carga);
 
         // Recibe el estado de la celula y lo carga en el objeto
-        void setEstado(string estado);
+        void setEstado(Estado estado);
 
         // Obtiene el nombre del mutador de la celula
-        string getMutador();
+        Mutador getMutador();
 
         // Obtiene el nombre del estado de la celula
-        string getEstado();
+        Estado getEstado();
 
 };
 
 Celula::Celula(){
     Gen gen = Gen();
-    this->estado = "MUERTA";
-    this->mutador = "NINGUNA";
+    this->estado = MUERTA;
+    this->mutador = NINGUNA;
     for(int i = 0; i < 3; i ++){
         this->genes[i] = gen;
     }
@@ -73,16 +91,48 @@ void Celula::setGen(int gen, string nombre, int carga){
     this->genes[gen].setData(nombre, carga);
 }
 
-void Celula::setEstado(string estado){
+void Celula::setEstado(Estado estado){
     this->estado = estado;
 }
 
-string Celula::getMutador(){
+Mutador Celula::getMutador(){
     return this->mutador;
 }
 
-string Celula::getEstado(){
+Estado Celula::getEstado(){
     return this->estado;
+}
+
+void setRandCell(){
+    this->setEstado(VIVA);
+    this->setGen(0, "GEN1", rand() % 255);
+    this->setGen(1, "GEN2", rand() % 255);
+    this->setGen(2, "GEN3", rand() % 255);
+    this->setMutadorRandom();
+}
+
+void setMutadorRandom(){
+    int mutador = rand() % 24;
+    switch(mutador){
+        case 0:
+            this->mutador = PORTAL;
+            break;
+        case 1:
+            this->mutador = RADIOACTIVA;
+            break;
+        case 2:
+            this->mutador = ENVENENADA;
+            break;
+        case 3:
+            this->mutador = PROCREADORA;
+            break;
+        case 4:
+            this->mutador = CONTAMINADA;
+            break;
+        default:
+            this->mutador = NINGUNA;
+            break;
+    }
 }
 
 
@@ -102,7 +152,7 @@ string Gen::getNombre(){
     return this->nombre;
 }
 
-int Gen::getCarga(){z
+int Gen::getCarga(){
     return this->carga;
 }
 

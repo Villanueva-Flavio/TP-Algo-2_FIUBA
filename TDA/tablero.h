@@ -36,9 +36,47 @@ template <class T> class Tablero {
         void cargarTableroAutomatico(Opciones opciones);
 
         void cargarTableroManual(Opciones opciones);
+
+        void actualizarTablero();
 };
 
+template <class T> Tablero<T>::cargarTableroAutomatico(Opciones opciones){
+    int x, y, z;
+    Celula* aux = new Celula();
+    for(int i = 0; i < opciones->getCelulasIniciales(); i++){
+        x = rand() % opciones->getDimension(0);
+        y = rand() % opciones->getDimension(1);
+        z = rand() % opciones->getDimension(2);
+        aux->setRandCell();
+        this->getTData(x, y, z)->setData(*aux);
+    }
+    delete aux;
+}
 
+void solicitarEntero(int* resp, int max){
+    do{
+        cin >> *resp;
+        if(*resp < 0 || *resp > max){
+            cout << endl << "Ingrese un numero valido: ";
+        }
+    } while (*resp < 0 || *resp > max);
+}
+
+template <class T> Tablero<T>::cargarTableroManual(Opciones opciones){
+    int x, y, z;
+    Celula* aux = new Celula();
+    for(int i = 0; i < opciones->getCelulasIniciales(); i++){
+        aux->setRandCell();
+        cout << "Ingrese la coordenada x de la celula " << i << ": ";
+        solicitarEntero(&x, opciones->getDimension(0));
+        cout << "Ingrese la coordenada y de la celula " << i << ": ";
+        solicitarEntero(&y, opciones->getDimension(1));
+        cout << "Ingrese la coordenada z de la celula " << i << ": ";
+        solicitarEntero(&z, opciones->getDimension(2));
+        this->getTData(x, y, z)->setData(*aux);
+    }
+    delete aux;
+}
 
 template <class T> Tablero<T>::Tablero(int n, int m, int l) {
     this->x = n, this->y = m, this->z = l;
@@ -123,6 +161,10 @@ template <class T> void Tablero<T>::cargarTableroAutomatico(Opciones opciones) {
             
         }
     }
+}
+
+template <class T> void Tablero<T>::actualizarTablero(){
+    
 }
 
 #endif
