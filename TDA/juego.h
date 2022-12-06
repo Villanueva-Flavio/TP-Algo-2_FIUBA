@@ -31,6 +31,7 @@ class Juego{
         void llenarJuego();
         void jugar();
         Tablero<Celula*>* getTablero();
+        int getParam(int i);
 };
 
 Juego::Juego(int size[3], Opciones aux){
@@ -70,7 +71,7 @@ Tablero<Celula*>* Juego::getTablero(){
 
 void Juego::cargarTablero(){
     if (this->getOpciones()->getAutomatico()){
-        this->->cargarTableroAutomatico(opciones);
+        this->getTablero()->cargarTableroAutomatico(opciones);
     } else {
         this->getTablero()->cargarTableroManual(opciones);
     }
@@ -78,20 +79,20 @@ void Juego::cargarTablero(){
 
 void Juego::checkCongelado(string* opcion){
     if(!this->congelado){
-        cout << "El juego se congeló, desea reiniciar? (Reiniciar / Salir)" << endl;
+        cout << "El juego se congeló, desea reiniciar? (REINICIAR / SALIR)" << endl;
     }
     solicitarDecision(opcion);
 }
 
 void Juego::checkReiniciar(string opcion){
-    if(opcion == "Reiniciar" || opcion == "R" || opcion == "r" || opcion = "reiniciar"){
+    if(opcion == "REINICIAR"){
         this->llenarJuego();
         this->jugar();
     }
 }
 
 void Juego::checkSalir(string opcion){
-    if(opcion == "Salir" || opcion == "S" || opcion == "s" || opcion = "salir"){
+    if(opcion == "SALIR"){
         system("clear");
         cout << "Se cerró el juego en el turno " << this->getTurno() << endl;
         cout << "Gracias por jugar!" << endl;
@@ -99,11 +100,16 @@ void Juego::checkSalir(string opcion){
     }
 }
 
+int getParam(int i){
+    return this->getOpciones->params[i];
+}
+
 void Juego::jugar(){
     string opcion;
-    while(!this->congelado || opcion != "Next" || opcion != "next" || opcion != "N" || opcion != "n"){
+    int aux[3] = {this->getParams(0), this->getParams(1), getParams(2)};
+    while(!this->congelado || opcion != "NEXT"){
         juego->addTurno();
-        this->tablero->actualizarTablero();
+        this->tablero->actualizarTablero(aux);
         this->stats->actualizarStats(this->tablero, this->getTurno);
         this->stats->imprimirStats(this->getTurno);
         this->congelado = this->stats->estaCongelado();

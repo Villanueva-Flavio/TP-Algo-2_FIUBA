@@ -37,16 +37,14 @@ template <class T> class Tablero {
 
         void cargarTableroManual(Opciones opciones);
 
-        void actualizarTablero();
-
         int obtenerVecinas(int x, int y, int z);
 
-        Celula nuevoEstadoCelula(int i, int j, int k, int vecinas);
+        Celula nuevoEstadoCelula(int i, int j, int k, int vecinas, int params[3]);
 
-        void avanzarTurno();
+        void avanzarTurno(int params[3]);
 };
 
-template <class T> Tablero<T>::cargarTableroAutomatico(Opciones opciones){
+template <class T> void Tablero<T>::cargarTableroAutomatico(Opciones opciones){
     int x, y, z;
     Celula* aux = new Celula();
     for(int i = 0; i < opciones->getCelulasIniciales(); i++){
@@ -54,12 +52,16 @@ template <class T> Tablero<T>::cargarTableroAutomatico(Opciones opciones){
         y = rand() % opciones->getDimension(1);
         z = rand() % opciones->getDimension(2);
         aux->setRandCell();
-        this->getTData(x, y, z)->setData(*aux);
+        this->setTData(x, y, z, *aux);
     }
     delete aux;
 }
 
-void solicitarEntero(int* resp, int max){
+template <class T> int Tablero<T>::getEspacioRestante(){
+    return (this->)
+}
+
+template <class T> void Tablero<T>::solicitarEntero(int* resp, int max){
     do{
         cin >> *resp;
         if(*resp < 0 || *resp > max){
@@ -68,7 +70,7 @@ void solicitarEntero(int* resp, int max){
     } while (*resp < 0 || *resp > max);
 }
 
-template <class T> Tablero<T>::cargarTableroManual(Opciones opciones){
+template <class T> void Tablero<T>::cargarTableroManual(Opciones opciones){
     int x, y, z;
     Celula* aux = new Celula();
     for(int i = 0; i < opciones->getCelulasIniciales(); i++){
@@ -163,28 +165,30 @@ template <class T> int Tablero<T>::obtenerVecinas(int x, int y, int z) {
     return vecinas;
 }
 
-template <class T> Celula Tablero<T>::nuevoEstadoCelula(int i, int j, int k, int vecinas){
+template <class T> Celula Tablero<T>::nuevoEstadoCelula(int i, int j, int k, int vecinas, int params[3]){
     Celula celula = this->getTData(i, j, k);
+    //Considerar mutadores
     if(celula->getEstado() == "VIVA"){
-        if(vecinas < 2 || vecinas > 3){
+        if(vecinas < params[1] || vecinas > params[2]){
             celula->setEstado("MUERTA");
         }
     } else {
-        if(vecinas == 3){
+        if(vecinas > params[0]){
             celula->setEstado("VIVA");
+            //Considerar genes
         }
     }
     return celula;
 }
 
-template <class T> void Tablero<T>::avanzarTurno(){
+template <class T> void Tablero<T>::avanzarTurno(int params[3]){
     int vecinas;
     Celula aux = new Celula();
     for(int i = 0; i < this->getTamanioX(); i++){
         for(int j = 0; j < this->getTamanioY(); j++){
             for(int k = 0; k < this->getTamanioZ(); k++){
                 vecinas = obtenerVecinas(i, j, k);
-                aux = nuevoEstadoCelula(i, j, k, vecinas);
+                aux = nuevoEstadoCelula(i, j, k, vecinas, params);
                 this->setTData(i, j, k, aux);
             }
         }
