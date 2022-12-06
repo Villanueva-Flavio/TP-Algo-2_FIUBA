@@ -128,6 +128,10 @@ void Juego::solicitarDecision(string* opcion, int* turnosRestantes){
     *turnosRestantes = 1;
 }
 
+void imprimirImagen(){
+    
+}
+
 void Juego::jugar(){
     string opcion;
     int turnosRestantes = 1;
