@@ -163,14 +163,20 @@ template <class T> int Tablero<T>::obtenerVecinas(int x, int y, int z) {
 
 template <class T> Celula Tablero<T>::nuevoEstadoCelula(int i, int j, int k, int vecinas, int params[3]){
     Celula celula = this->getTData(i, j, k);
-    if(celula->getEstado() == "VIVA"){
-        if(vecinas < params[1] || vecinas > params[2]){
-            celula->setEstado("MUERTA");
-        }
-    } else {
-        if(vecinas > params[0]){
-            celula->setEstado("VIVA");
-        }
+    switch (this->getEstado()){
+    case VIVA:
+        celula.setEstado((vecinas < params[0] || vecinas > params[1])? MUERTA : VIVA);
+        break;
+    
+    case MUERTA:
+        celula.setEstado((vecinas == params[2])? VIVA : MUERTA);
+        break;
+
+    case NACIDA:
+        celula.setEstado(VIVA);
+        //Si la celda no esta con el mutador
+        break;
+
     }
     return celula;
 }
