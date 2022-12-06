@@ -19,16 +19,14 @@ class Juego{
     public:
         Juego(Opciones aux);
         ~Juego();
-        void llenarJuego(Opciones* aux);
-        Stats getStats();
+        void llenarJuego();
+        Stats getStats(); // Useless?
         Opciones getOpciones();
-        void setStats(Stats aux);
+        void setStats(Stats aux); // Useless?
         void addTurno();
         int getTurno();
-        void solicitarMetaData(Opciones* aux);
         void cargarTablero(Opciones opciones);
         void setOpciones(Opciones aux);
-        void llenarJuego();
         void jugar();
         Tablero<Celula*>* getTablero();
 };
@@ -42,6 +40,17 @@ Juego::Juego(int size[3], Opciones aux){
 
 Juego::~Juego(){
     delete this->tablero;
+}
+
+void Juego::llenarJuego(){
+    this->getOpciones()->setLimited(this->getOpciones()->getLimited());
+    this->setOpciones(this->opciones);
+    this->cargarTablero(this->opciones);
+    this->stats->reset();
+}
+
+void Juego::setOpciones(Opciones aux){
+    this->opciones = aux;
 }
 
 void Juego::setStats(Stats aux){
@@ -76,22 +85,21 @@ void Juego::cargarTablero(){
     }
 }
 
-void Juego::checkCongelado(string* opcion){
-    if(!this->congelado){
+void Juego::checkCongelado(string opcion){
+    if(this->congelado){
         cout << "El juego se congeló, desea reiniciar? (Reiniciar / Salir)" << endl;
     }
-    solicitarDecision(opcion);
 }
 
 void Juego::checkReiniciar(string opcion){
-    if(opcion == "Reiniciar" || opcion == "R" || opcion == "r" || opcion = "reiniciar"){
+    if(opcion == "REINICIAR"){
         this->llenarJuego();
         this->jugar();
     }
 }
 
 void Juego::checkSalir(string opcion){
-    if(opcion == "Salir" || opcion == "S" || opcion == "s" || opcion = "salir"){
+    if(opcion == "SALIR"){
         system("clear");
         cout << "Se cerró el juego en el turno " << this->getTurno() << endl;
         cout << "Gracias por jugar!" << endl;
@@ -99,15 +107,42 @@ void Juego::checkSalir(string opcion){
     }
 }
 
+void Juego::checkMultiple(string opcion, int* turnosRestantes){
+    if(opcion == "MULTIPLE"){
+        cout << "Ingrese la cantidad de turnos que desea jugar: " << endl;
+        cin >> *turnosRestantes;
+        while(*turnosRestantes <= 0 || *turnosRestantes > 100){
+            cout << "Ingrese una cantidad válida menor a 100: " << endl;
+            cin >> *turnosRestantes;
+        }
+    }
+}
+
+void Juego::solicitarDecision(string* opcion, int* turnosRestantes){
+    cout << "¿Qué desea hacer? (NEXT / MULTIPLE / REINICIAR / SALIR)" << endl;
+    cin >> *opcion;
+    while(*opcion != "NEXT" && *opcion != "MULTIPLE" && *opcion != "REINICIAR" && *opcion != "SALIR"){
+        cout << "Opción inválida, por favor ingrese una opción válida" << endl;
+        cin >> *opcion;
+    }
+    *turnosRestantes = 1;
+}
+
 void Juego::jugar(){
     string opcion;
-    while(!this->congelado || opcion != "Next" || opcion != "next" || opcion != "N" || opcion != "n"){
+    int turnosRestantes = 1;
+    while(!this->congelado && opcion != "NEXT"){
+        turnosRestantes --;
         juego->addTurno();
-        this->tablero->actualizarTablero();
+        this->tablero->actualizarTablero(this->opciones->params);
         this->stats->actualizarStats(this->tablero, this->getTurno);
         this->stats->imprimirStats(this->getTurno);
         this->congelado = this->stats->estaCongelado();
-        checkCongelado(&opcion);
+        checkCongelado(opcion);
+        if(turnosRestantes <= 0){
+            solicitarDecision(&opcion, &turnosRestantes);
+            checkMultiple(opcion, &turnosRestantes);
+        }
     }
     checkReiniciar(opcion);
     checkSalir(opcion);

@@ -37,13 +37,11 @@ template <class T> class Tablero {
 
         void cargarTableroManual(Opciones opciones);
 
-        void actualizarTablero();
+        void actualizarTablero(int params[3]);
 
         int obtenerVecinas(int x, int y, int z);
 
-        Celula nuevoEstadoCelula(int i, int j, int k, int vecinas);
-
-        void avanzarTurno();
+        Celula nuevoEstadoCelula(int i, int j, int k, int vecinas, int params[3]);
 };
 
 template <class T> Tablero<T>::cargarTableroAutomatico(Opciones opciones){
@@ -146,7 +144,7 @@ template <class T> void Tablero<T>::setCoordenada(int n, int m, int l){
 }
 
 template <class T> bool Tablero<T>::inRange(int n, int m, int l) {
-    return (n >= 0 && n < this->x && m >= 0 && m < this->y && l >= 0 && l < this->z);
+    return (n >= 0 && n =< this->x && m >= 1 && m =< this->y && l >= 1 && l =< this->z);
 }
 
 template <class T> int Tablero<T>::obtenerVecinas(int x, int y, int z) {
@@ -163,28 +161,28 @@ template <class T> int Tablero<T>::obtenerVecinas(int x, int y, int z) {
     return vecinas;
 }
 
-template <class T> Celula Tablero<T>::nuevoEstadoCelula(int i, int j, int k, int vecinas){
+template <class T> Celula Tablero<T>::nuevoEstadoCelula(int i, int j, int k, int vecinas, int params[3]){
     Celula celula = this->getTData(i, j, k);
     if(celula->getEstado() == "VIVA"){
-        if(vecinas < 2 || vecinas > 3){
+        if(vecinas < params[1] || vecinas > params[2]){
             celula->setEstado("MUERTA");
         }
     } else {
-        if(vecinas == 3){
+        if(vecinas > params[0]){
             celula->setEstado("VIVA");
         }
     }
     return celula;
 }
 
-template <class T> void Tablero<T>::avanzarTurno(){
+template <class T> void Tablero<T>::actualizarTablero(int params[3]){
     int vecinas;
     Celula aux = new Celula();
     for(int i = 0; i < this->getTamanioX(); i++){
         for(int j = 0; j < this->getTamanioY(); j++){
             for(int k = 0; k < this->getTamanioZ(); k++){
                 vecinas = obtenerVecinas(i, j, k);
-                aux = nuevoEstadoCelula(i, j, k, vecinas);
+                aux = nuevoEstadoCelula(i, j, k, vecinas, params);
                 this->setTData(i, j, k, aux);
             }
         }

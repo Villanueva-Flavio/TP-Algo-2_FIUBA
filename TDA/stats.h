@@ -33,9 +33,18 @@ class Stats{
         void actualizarStats(Tablero<Celula*>* tablero, int turno);
         void imprimirStats(int turno);
         bool estaCongelado();
+        void reset();
 };
 
 Stats::Stats(){
+    this->nacidas = 0;
+    this->muertas = 0;
+    this->promedioNacidas = 0;
+    this->promedioMuertas = 0;
+    this->vivas = 0;
+}
+
+void Stats::reset(){
     this->nacidas = 0;
     this->muertas = 0;
     this->promedioNacidas = 0;

@@ -9,7 +9,10 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    string param = (argc > 1) ? argv[1] : "";
+    stringstream argument;
+    if(argc > 1){
+        argument << argv[1];
+    }
     srand((unsigned)time(NULL));
     Opciones* opciones = new Opciones();
     opciones->solicitarMetadata(param);
