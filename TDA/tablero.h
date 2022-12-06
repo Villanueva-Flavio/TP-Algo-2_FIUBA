@@ -161,24 +161,41 @@ template <class T> int Tablero<T>::obtenerVecinas(int x, int y, int z) {
     return vecinas;
 }
 
+template <class T> Celula Tablero<T>::vecinaAleatoria(int i, int j, int k, int newCoord[3]){
+    do{
+        newCoord[0] = i - 1 + rand() % 3;
+        newCoord[1] = j - 1 + rand() % 3;
+        newCoord[2] = k - 1 + rand()% 3;
+    } while(!this->inRange(newCoord[0], newCoord[1], newCoord[2])); 
+    return this->getTData(newCoord[0], newCoord[1], newCoord[2]);
+}
+
 template <class T> Celula Tablero<T>::nuevoEstadoCelula(int i, int j, int k, int vecinas, int params[3]){
-    Celula celula = this->getTData(i, j, k);
+    Celula celula = this->getTData(i, j, k), aux;
     switch (this->getEstado()){
     case VIVA:
-        celula.setEstado((vecinas < params[0] || vecinas > params[1])? MUERTA : VIVA);
+        celula->setEstado((vecinas < params[1] || vecinas > params[2])? MUERTA : VIVA);
         break;
     
     case MUERTA:
-        celula.setEstado((vecinas == params[2])? VIVA : MUERTA);
+        celula->setEstado(((vecinas > params[0]) || (vecinas > 1 && celulas->getMutador() == PROCREADORA))? VIVA : MUERTA);
         break;
 
     case NACIDA:
-        celula.setEstado(VIVA);
-        //Si la celda no esta con el mutador
+        celula->setEstado((celula->getMutador() == CONTAMINADA)? VIVA : NACIDA);
         break;
 
     }
     return celula;
+}
+
+template <class T> void Tablero<T>::verificarPortal(int i, int j, int k, Celula aux){
+    int newCoord[3];
+    Celula vecina = this->vecinaAleatoria(i, j, k, newCoord);
+    if(vecina->getEstado() == MUERTA && vecina->getMutador() == PORTAL && aux->getEstado() == NACIENDO){
+        aux->setEstado(VIVA);
+    }
+    this->setTdata(newCoord[0], newCoord[1], newCoord[2], aux);
 }
 
 template <class T> void Tablero<T>::actualizarTablero(int params[3]){
@@ -189,6 +206,7 @@ template <class T> void Tablero<T>::actualizarTablero(int params[3]){
             for(int k = 0; k < this->getTamanioZ(); k++){
                 vecinas = obtenerVecinas(i, j, k);
                 aux = nuevoEstadoCelula(i, j, k, vecinas, params);
+                verificarPortal(i, j, k, aux);
                 this->setTData(i, j, k, aux);
             }
         }
