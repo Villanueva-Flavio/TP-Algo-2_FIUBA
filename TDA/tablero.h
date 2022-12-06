@@ -178,11 +178,29 @@ template <class T> Celula Tablero<T>::nuevoEstadoCelula(int i, int j, int k, int
         break;
     
     case MUERTA:
-        celula->setEstado(((vecinas > params[0]) || (vecinas > 1 && celulas->getMutador() == PROCREADORA))? VIVA : MUERTA);
+        celula->setEstado(((vecinas > params[0]) || (vecinas > 1 && celulas->getMutador() == PROCREADORA))? NACIDA : MUERTA);
+        if(celula->getEstado() == NACIDA){
+            if(celulas->getMutador() == RADIOACTIVA){
+                int a = rand()%3;
+                for(a; a < 3; a ++){
+                    celula->setGen(i, celula->RandomString(), rand()%255);
+                }
+            } else {
+                int coordenadaVecina[3];
+                for(int a = 0; a < 3; a ++){    
+                    aux = this->vecinaAleatoria(i, j, k, coordenadaVecina);
+                    int genRand = rand()%3;
+                    celula->setGen(a, aux->getGen(genRand)->getNombre(), rand()% aux->getGen(genRand)->getCarga());
+                }
+            }
+        }
         break;
 
     case NACIDA:
         celula->setEstado((celula->getMutador() == CONTAMINADA)? VIVA : NACIDA);
+        if(celula->getMutador() == ENVENENADA && celula->getEstado() == VIVA){
+            celula->setGen(rand()%3, "", 0);
+        }
         break;
 
     }

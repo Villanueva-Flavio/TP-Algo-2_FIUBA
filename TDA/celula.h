@@ -40,6 +40,8 @@ class Gen{
         int getCarga();
 
         void setMutadorRandom();
+
+        string randomString();
 };
 
 class Celula {
@@ -79,6 +81,15 @@ Celula::Celula(){
     }
 }
 
+string Celula::RandomString(){
+    char letras[26] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+    string res = "";
+    for (int i = 0; i < 20; i++){
+        res = res + letras[rand() % 26];
+    }
+    return res;
+}
+
 void Celula::setData(Celula datos){
     this->estado = datos.estado;
     this->mutador = datos.mutador;
@@ -105,9 +116,9 @@ Estado Celula::getEstado(){
 
 void setRandCell(){
     this->setEstado(VIVA);
-    this->setGen(0, "GEN1", rand() % 255);
-    this->setGen(1, "GEN2", rand() % 255);
-    this->setGen(2, "GEN3", rand() % 255);
+    this->setGen(0, this->randomString(), rand() % 255);
+    this->setGen(1, this->randomString(), rand() % 255);
+    this->setGen(2, this->randomString(), rand() % 255);
     this->setMutadorRandom();
 }
 
